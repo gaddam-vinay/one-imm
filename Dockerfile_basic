@@ -1,0 +1,26 @@
+FROM ubuntu:latest
+
+# Install necessary dependencies
+RUN apt-get update && apt-get install -y
+
+
+
+
+# Create a new user
+RUN groupadd -r myuser && useradd -r -g myuser myuser
+
+# Set the home directory for the new user
+COPY . /game
+# Set the working directory
+WORKDIR /game
+
+
+# Change ownership of copied files to the new user
+RUN chown -R myuser:myuser /game
+
+# Switch to the new user
+USER myuser
+
+CMD bash  Pixel_Streaming_demo.sh
+
+#ENTRYPOINT ["/app/GameFiles/Pixel_Streaming_demo/Binaries/Linux/Pixel_Streaming_demo"]
